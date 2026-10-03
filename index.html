@@ -930,32 +930,53 @@ classDiagram
                 <div class="spec-container-grid">
                     <div class="diagram-viewport">
                         <div class="mermaid">
-flowchart TB
-    subgraph V_Monolith["V République : Noyau Monolithique 1958"]
-        Elysee["Elysée : Administrateur Central root"]
-        ForceCmd["Instruction d'Outrepassement : sudo 49.3"]
-        Ministries["Modules Ministériels Défaillants"]
-        BugMemory["Memory Leak : Capitaux Off-shore"]
-        Collapse["Crash Global : Blocage Institutionnel"]
+graph TB
+    %% Definitions des styles pour agrandir et espacer les nœuds
+    classDef default fill:#131c2e,stroke:#00f0ff,stroke-width:2px,color:#ffffff,font-size:14px;
+    classDef redNode fill:#24141e,stroke:#ef4444,stroke-width:2px,color:#ffffff,font-size:14px;
+    classDef accentNode fill:#0e2a3a,stroke:#00f0ff,stroke-width:2px,color:#ffffff,font-weight:bold,font-size:15px;
+    subgraph VI_Kernel ["VIᵉ République : Micro-Noyau & Subsidiarité (2026+)"]
+        direction TB
+        
+        MK["<b>Microkernel Régalien Minimal</b><br/>Justice Arbitrale, Défense,<br/>Droits Fondamentaux"]
+        Bus["<b>Bus Public IPC</b><br/>Données Ouvertes et<br/>API Publiques"]
+        
+        subgraph Ring3 ["Espace Utilisateur Isolated (Ring-3)"]
+            direction LR
+            Communes["<b>Nœuds Territoriaux</b><br/>Communes et Bassins"]
+            Hospitals["<b>Pôles Sanitaires<br/>et Éducation</b>"]
+        end
+        
+        Citizens["<b>Nœuds Citoyens</b><br/>Auditeurs Pairs"]
+
+        MK <==>|Appels Système Sécurisés| Bus
+        Communes <==>|Isolation Mémoire| Bus
+        Bus <==>|Isolation Mémoire| Hospitals
+        Bus <==>|Isolation Mémoire| Citizens
+    end
+    
+    subgraph V_Monolith ["Vᵉ République : Noyau Monolithique (1958)"]
+        direction TB
+        
+        Elysee["<b>Elysée : Administrateur Central root</b>"]
+        ForceCmd["<b>Instruction d'Outrepassement : sudo 49.3</b>"]
+        Ministries["<b>Ministries : Modules<br/>Ministériels Défaillants</b>"]
+        Collapse["<b>Collapse : Crash Global :<br/>Blocage Institutionnel</b>"]
+        BugMemory["<b>Memory Leak : Capitaux Off-shore</b>"]
 
         Elysee -->|Élévation de privilèges| ForceCmd
         ForceCmd -->|Court-circuit du Parlement| Ministries
         Ministries --> Collapse
-        BugMemory -.->|Assèchement des ressources| Elysee
+        Elysee -.->|Assèchement des ressources| BugMemory
+        BugMemory -.-> Collapse
     end
 
-    subgraph VI_Kernel["VI République : Micro-Noyau et Subsidiarité"]
-        MK["Microkernel Régalien Minimal<br/>Justice Arbitrale, Défense, Droits Fondamentaux"]
-        Bus["Bus Public IPC : Données Ouvertes et API Publiques"]
-        Communes["Nœuds Territoriaux : Communes et Bassins"]
-        Hospitals["Pôles Sanitaires et Éducation"]
-        Citizens["Nœuds Citoyens : Auditeurs Pairs"]
+    
 
-        MK <-->|Appels Système Sécurisés| Bus
-        Bus <-->|Isolation Mémoire| Communes
-        Bus <-->|Isolation Mémoire| Hospitals
-        Bus <-->|Isolation Mémoire| Citizens
-    end
+    %% Application des styles
+    class Elysee,ForceCmd,Ministries redNode;
+    class Collapse redNode;
+    class MK,Bus accentNode;
                         </div>
                     </div>
                     <div class="spec-doc-sidebar">
