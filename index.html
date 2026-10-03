@@ -6,6 +6,19 @@
     <title>VIᵉ République | Architecture Système & Réseau Souverain</title>
     <!-- Script Mermaid pour le rendu des diagrammes UML -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <!-- Script MathJax 3 pour le rendu des équations LaTeX -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <style>
         :root {
             --bg-primary: #070b12;
@@ -585,6 +598,58 @@
             font-size: 0.85rem;
             font-family: var(--font-code);
         }
+        /* TOOLTIP BOSTROM (HTML VALIDE & SURVOL FLUIDE) */
+        .sim-tooltip-trigger {
+            color: var(--accent-cyan);
+            font-weight: bold;
+            cursor: help;
+            position: relative;
+            display: inline-block;
+            margin-left: 2px;
+        }
+
+        .sim-tooltip-content {
+            display: none; /* Cache le bloc tant qu'on ne survole pas */
+            width: 440px;
+            background-color: #0b1220;
+            color: #cbd5e1;
+            text-align: left;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 8px;
+            padding: 1rem;
+            position: absolute;
+            z-index: 999;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+            font-size: 0.82rem;
+            font-weight: normal;
+            line-height: 1.5;
+            white-space: normal;
+        }
+
+        /* Déclenchement au survol */
+        .sim-tooltip-trigger:hover .sim-tooltip-content {
+            display: block;
+        }
+
+        /* Simulation de la liste en pure structure inline (Span) */
+        .sim-list {
+            display: block;
+            margin: 0.6rem 0;
+        }
+
+        .sim-item {
+            display: block;
+            margin-bottom: 0.35rem;
+        }
+
+        /* Ajustement MathJax au survol */
+        .sim-tooltip-content .MathJax {
+            color: var(--accent-cyan) !important;
+            font-size: 0.95em;
+        }
     </style>
 </head>
 <body>
@@ -602,64 +667,79 @@
     </header>
 
     <main>
-        <!-- MANIFESTE DE VISION (2026) -->
+        <!-- SECTION MANIFESTE / VISION (CYPHERPUNK & SYSTEM ARCHITECTURE) -->
         <section class="manifesto-card">
             <span class="manifesto-badge">Projet Open Source :: Horizon 2026</span>
             <h2 class="manifesto-title">Ma 6ᵉ République : Refonder le Code Source Républicain</h2>
+            
             <p class="manifesto-text">
-                <strong>Ma 6ᵉ République</strong> est un projet open source destiné à démontrer qu'une société humaine peut être rigoureusement modélisée sous la forme d'un programme et d'un réseau informatique distribué. En cartographiant avec précision l'ensemble des structures, des flux (matières, monnaie, énergie, information) et des stocks, nous identifions les dysfonctionnements majeurs de notre organisation collective.
-            </p>
-            <p class="manifesto-text">
-                Dans cette nouvelle topologie, l'humain n'est plus un simple « administré » passif au bas d'une pyramide. Il est modélisé comme un <strong>nœud informatique souverain</strong>, disposant d'une adresse physique inaltérable et unique sur le réseau (à l'image de l'adresse MAC d'un composant matériel). Le citoyen devient ainsi une cellule autonome au sein d'un vaste organisme social multicellulaire. L'État cesse d'être un serveur central monolithique pour devenir un <strong>réseau de pairs (P2P)</strong>, où l'intelligence démocratique et la résilience émergent des interactions horizontales.
-            </p>
-            <p class="manifesto-text">
-                Cette architecture consacre le libre arbitre technologique : chaque nœud choisit les protocoles d'échange de valeur qu'il souhaite activer, garantissant une participation à l'économie de manière strictement volontaire (<em>opt-in</em>). L'identité dépasse l'état civil bureaucratique pour devenir multidimensionnelle. Chaque individu y cultive et définit ses propres attributs — <strong>intelligence, force, sagesse, endurance</strong> — à la manière d'un avatar évoluant dans un MMORPG du monde réel. Le POD cryptographique devient alors bien plus qu'un simple coffre-fort de données : c'est l'interface matérielle qui abrite et protège le <em>flux de conscience</em> du citoyen, lui permettant d'irradier dans le réseau.
-            </p>
-            <p class="manifesto-text">
-                Le grand problème de notre société actuelle est qu'elle tourne sur un système d'exploitation conçu en 1958 : centralisé, opaque et monolithique. <strong>Nous sommes aujourd'hui en 2026</strong> : à l'ère de l'intelligence artificielle et des réseaux distribués, il est temps de moderniser et de sécuriser notre infrastructure institutionnelle depuis la base.
+                <strong>Ma 6ᵉ République</strong> est un projet open source destiné à démontrer qu'une société humaine peut être rigoureusement modélisée sous la forme d'un programme informatique distribué et d'un réseau de pairs<span class="sim-tooltip-trigger">*<span class="sim-tooltip-content">
+                    <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.4rem;">[Note Théorique :: Trilemme de Simulation de Nick Bostrom (2003)]</strong>
+                    La modélisation informatique du social s'inscrit au croisement de la philosophie analytique et de la physique de l'information. Selon Bostrom, au moins une des trois propositions suivantes est vraie :
+                    
+                    <span class="sim-list">
+                        <span class="sim-item"><strong>1. $f_p \approx 0$ :</strong> La fraction de civilisations qui atteignent un stade « post-humain » est quasi nulle.</span>
+                        <span class="sim-item"><strong>2. $f_N \approx 0$ :</strong> La fraction de civilisations post-humaines exécutant des simulations d'ancêtres est quasi nulle.</span>
+                        <span class="sim-item"><strong>3. $f_{sim} \approx 1$ :</strong> La fraction de personnes partageant notre type d'expérience qui vivent dans une simulation est quasi égale à un.</span>
+                    </span>
+
+                    <em style="display: block; margin-top: 0.5rem; font-size: 0.78rem; color: #94a3b8;">Sous cet angle, coder un jumeau numérique sociétal n'est pas une simple métaphore administrative, mais la révélation formelle des lois informelles qui régissent déjà nos interactions.</em>
+                </span></span>. En cartographiant avec précision l'ensemble des structures, des flux (matières, monnaie, énergie, information) et des stocks, nous identifions et corrigeons les failles logiques de notre organisation collective.
             </p>
 
-            <!-- NOUVEL ENCART : AXIOME CYPHERPUNK -->
-            <div style="background: rgba(0, 240, 255, 0.05); border-left: 4px solid var(--accent-cyan); padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 8px 8px 0;">
-                <h3 style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-family: var(--font-code); text-transform: uppercase; letter-spacing: 0.1em;">// Axiome Fondamental du Kernel</h3>
-                <p style="font-size: 1.2rem; color: #fff; font-weight: 600; font-style: italic; margin-bottom: 0.25rem;">
+            <p class="manifesto-text">
+                Le système institutionnel actuel tourne sur un système d'exploitation obsolète conçu en 1958 : centralisé, opaque et monolithique. <strong>Nous sommes en 2026</strong> : à l'ère des réseaux distribués et de la vérification formelle, administrer une nation par des décrets discrétionnaires non auditables revient à exécuter des binaires opaques sans accès au code source.
+            </p>
+
+            <p class="manifesto-text">
+                Dans cette nouvelle topologie, le citoyen n'est plus un « administré » passif au bas d'une hiérarchie pyramidale. Il est modélisé comme un <strong>nœud informatique souverain</strong>, doté d'une empreinte matérielle et cryptographique inaltérable (à l'image d'une adresse MAC sur un réseau physique). L'État cesse d'être un serveur central autoritaire pour devenir une infrastructure <strong>Peer-to-Peer (P2P)</strong>, où la gouvernance émerge de la coordination directe et de la synchronisation de consensus locaux.
+            </p>
+
+            <p class="manifesto-text">
+                S'inspirant directement de la philosophie Cypherpunk (Eric Hughes, Julian Assange), l'architecture consacre le principe de <strong>révélation sélective</strong> : la vie privée n'est pas un secret coupable, mais le pouvoir fondamental de ne divulguer au réseau que ce qui est strictement nécessaire à une transaction. Grâce aux conteneurs de données individuels (PODs) et aux preuves à divulgation nulle (<em>Zero-Knowledge Proofs</em>), le citoyen valide ses droits et ses interactions économiques (<em>opt-in</em>) sans jamais abandonner le contrôle de son identité ou de sa souveraineté numérique.
+            </p>
+
+            <!-- ENCART : AXIOME CYPHERPUNK & INFORMATIONAL GRAPH -->
+            <div style="background: rgba(0, 240, 255, 0.04); border-left: 4px solid var(--accent-cyan); padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 8px 8px 0; border: 1px solid rgba(0, 240, 255, 0.15); border-left-width: 4px;">
+                <h3 style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.4rem; font-family: var(--font-code); text-transform: uppercase; letter-spacing: 0.1em;">// AXIOME FONDAMENTAL DU KERNEL (HUGHES & ASSANGE)</h3>
+                <p style="font-size: 1.25rem; color: #fff; font-weight: 600; font-style: italic; margin-bottom: 0.3rem; letter-spacing: -0.01em;">
                     "Privacy for the weak, transparency for the powerful."
                 </p>
-                <p style="color: var(--accent-cyan); font-family: var(--font-code); font-size: 0.9rem;">
-                    (Vie privée inviolable pour les citoyens, transparence absolue pour les structures de pouvoir)
+                <p style="color: var(--accent-cyan); font-family: var(--font-code); font-size: 0.85rem; line-height: 1.5;">
+                    Une société ouverte exige l'asymétrie cryptographique : l'opacité garantie pour protéger l'individu face aux structures de domination, et la transparence algorithmique absolue pour tout nœud exerçant un mandat d'autorité ou gérant des fonds publics.
                 </p>
             </div>
 
-            <div class="manifesto-grid" style="margin-top: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+            <!-- GRILLE DES 6 MISSIONS ARCHITECTURALES -->
+            <div class="manifesto-grid" style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem;">
                 <div class="manifesto-point" style="border-left-color: var(--accent-cyan);">
                     <strong style="color: var(--accent-cyan);">1. ABSTRACTION DU SOCIAL À 95+%</strong>
-                    Mathématisation des flux, des stocks et des transactions déterministes. Automatisation des tâches de gestion pour redonner les 5 % restants à la délibération éthique et politique humaine.
+                    Mathématisation déterministe des flux, des stocks et des règles de gestion publique. Automatisation intégrale des tâches exécutives pour réserver la délibération humaine aux 5 % de choix éthiques et stratégiques.
                 </div>
+
                 <div class="manifesto-point" style="border-left-color: var(--accent-amber);">
-                    <strong style="color: var(--accent-amber);">2. FIN DU BRICOLAGE SUR OS 1958</strong>
-                    Comprendre que taxer ou raboter aveuglément revient à patcher Windows 95 à l'ère de l'IA. Refonte du noyau centralisé jacobin vers un micro-noyau modulaire et transparent.
+                    <strong style="color: var(--accent-amber);">2. MICRO-NOYAU & SUBSIDIARITÉ</strong>
+                    Remplacement du monolithe jacobin centralisé par une architecture à micro-noyau. Isoler les fonctions régaliennes au niveau Ring-0 et restituer l'autonomie d'exécution aux collectivités et bassins de vie (Ring-3).
                 </div>
+
                 <div class="manifesto-point" style="border-left-color: var(--accent-green);">
-                    <strong style="color: var(--accent-green);">3. PODS & CRYPTOGRAPHIE ZKP</strong>
-                    Souveraineté absolue des données citoyennes. Chaque individu possède son conteneur chiffré (POD) et valide ses droits par Preuves à Divulgation Nulle (ZKP), éliminant définitivement les fuites massives de données.
+                    <strong style="color: var(--accent-green);">3. PODS & PROTOCLE ZKP</strong>
+                    Souveraineté matérielle des données citoyennes. Chaque individu administre son propre conteneur chiffré (POD) et prouve ses attributs juridiques par Preuves à Divulgation Nulle, éliminant tout risque d'espionnage d'État ou de fuite industrielle.
                 </div>
-                
-                <!-- MISSION 4 -->
+
                 <div class="manifesto-point" style="border-left-color: var(--accent-purple);">
                     <strong style="color: var(--accent-purple);">4. LÉGISLATION « AS CODE » & CI/CD</strong>
-                    Fin des textes juridiques ambigus. La loi devient un algorithme open source. Chaque réforme est une <em>Pull Request</em> soumise à des tests de régression par IA (bacs à sable locaux) et intègre un <em>rollback</em> automatique si les métriques d'impact échouent.
+                    Fin de l'ambiguïté du droit bavard. Toute loi est formalisée sous forme d'algorithme open source. Elle fait l'objet d'une <em>Pull Request</em>, de tests de régression par IA et d'un déploiement témoin avec clause de <em>rollback</em> automatique si ses objectifs échouent.
                 </div>
 
-                <!-- MISSION 5 -->
                 <div class="manifesto-point" style="border-left-color: var(--accent-red);">
-                    <strong style="color: var(--accent-red);">5. CONTRAINTES THERMODYNAMIQUES "HARDCODÉES"</strong>
-                    L'économie de la VIᵉ République ne tourne pas à découvert écologique. Les flux d'énergie (kWh) et de matières sont intégrés au niveau Ring-0 du système, bloquant mathématiquement toute transaction ou politique qui violerait les limites planétaires locales.
+                    <strong style="color: var(--accent-red);">5. INVARIANTS THERMODYNAMIQUES</strong>
+                    Asservissement matériel de l'économie aux limites physiques. Les plafonds de consommation énergétique (kWh) et de ressources naturelles sont hardcodés dans le Kernel, bloquant de manière irréversible toute émission monétaire ou politique hors-limite.
                 </div>
 
-                <!-- MISSION 6 : L'APPLICATION DE LA PHRASE CHOC -->
                 <div class="manifesto-point" style="border-left-color: #38bdf8;">
-                    <strong style="color: #38bdf8;">6. ASYMÉTRIE CRYPTOGRAPHIQUE</strong>
-                    Renversement du paradigme de surveillance de la Vᵉ République. Le protocole garantit l'opacité et l'intimité du citoyen face au réseau, tout en imposant un audit public immuable et en temps réel sur chaque euro dépensé et chaque décision prise par un nœud d'autorité.
+                    <strong style="color: #38bdf8;">6. DÉMANTÈLEMENT DES CONSPIRATIONS</strong>
+                    Application du modèle de Julian Assange : les abus de pouvoir reposent sur des réseaux d'information secrets. L'open-data cryptographique et les registres d'audit immuables coupent les canaux d'opacité, rendant la corruption techniquement impossible.
                 </div>
             </div>
         </section>
