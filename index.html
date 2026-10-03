@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIᵉ République | Architecture Système & Réseau Souverain</title>
+    <!-- Script Mermaid pour le rendu des diagrammes UML -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #070b12;
+            --bg-secondary: #0e1524;
+            --bg-card: rgba(16, 24, 40, 0.75);
+            --border-card: rgba(0, 240, 255, 0.15);
+            --text-main: #e2e8f0;
+            --text-muted: #8492a6;
+            --accent-cyan: #00f0ff;
+            --accent-amber: #f59e0b;
+            --accent-green: #10b981;
+            --accent-purple: #a855f7;
+            --accent-red: #ef4444;
+            --font-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 2.5rem 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(180deg, rgba(14, 21, 36, 0.8) 0%, rgba(7, 11, 18, 0) 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand h1 {
+            font-size: 1.8rem;
+            letter-spacing: -0.03em;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .badge-kernel {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        .brand p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        .nav-status {
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            background: var(--bg-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-status span strong {
+            color: var(--accent-green);
+        }
+
+        main {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3.5rem;
+        }
+
+        /* SECTION MANIFESTE / VISION */
+        .manifesto-card {
+            background: linear-gradient(135deg, rgba(14, 21, 36, 0.9) 0%, rgba(10, 16, 28, 0.95) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 12px;
+            padding: 2.2rem;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .manifesto-badge {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--accent-amber);
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .manifesto-title {
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .manifesto-text {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .manifesto-point {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 0.8rem 1rem;
+            font-size: 0.88rem;
+        }
+
+        .manifesto-point strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-family: var(--font-code);
+        }
+
+        /* SECTION ORCHESTRATION IA & SPRINTS */
+        .orchestration-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .agent-card {
+            background: rgba(14, 21, 36, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1.25rem;
+            transition: all 0.2s ease;
+        }
+        .agent-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+        .agent-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        .agent-name {
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+        }
+        .agent-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+            font-family: var(--font-code);
+        }
+        .agent-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .sprints-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .sprint-row {
+            background: rgba(10, 16, 28, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 0 8px 8px 0;
+            padding: 1.25rem 1.5rem;
+            display: grid;
+            grid-template-columns: 200px 1fr 220px;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        @media (max-width: 900px) {
+            .sprint-row { grid-template-columns: 1fr; gap: 0.75rem; }
+        }
+        .sprint-meta {
+            font-family: var(--font-code);
+        }
+        .sprint-tag {
+            color: var(--accent-amber);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            display: block;
+        }
+        .sprint-title {
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 600;
+        }
+        .sprint-details {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .sprint-deliverable {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px dashed rgba(0, 240, 255, 0.3);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-family: var(--font-code);
+            font-size: 0.78rem;
+            color: var(--accent-cyan);
+            text-align: center;
+        }
+
+        /* SECTION SIMULATEUR CARTE & INSPECTEUR */
+        .simulator-grid {
+            display: grid;
+            grid-template-columns: 1fr 440px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1150px) {
+            .simulator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .map-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .layer-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .layer-btn {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-muted);
+            padding: 0.45rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-family: var(--font-code);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .layer-btn.active[data-layer="energy"] {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.1);
+        }
+        .layer-btn.active[data-layer="money"] {
+            border-color: var(--accent-amber);
+            color: var(--accent-amber);
+            background: rgba(245, 158, 11, 0.1);
+        }
+        .layer-btn.active[data-layer="materials"] {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .layer-btn.active[data-layer="decision"] {
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        canvas#networkCanvas {
+            width: 100%;
+            height: 760px;
+            background: radial-gradient(circle at center, rgba(14, 21, 36, 0.6) 0%, rgba(7, 11, 18, 0.95) 100%);
+            border-radius: 8px;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* INSPECTEUR DE NŒUD */
+        .inspector-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            font-family: var(--font-code);
+        }
+
+        .inspector-panel h2 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .node-meta {
+            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+        }
+        .node-meta div {
+            margin-bottom: 0.35rem;
+        }
+        .node-meta span {
+            color: var(--text-muted);
+        }
+
+        .stock-bars {
+            margin-bottom: 1.5rem;
+        }
+        .stock-item {
+            margin-bottom: 0.75rem;
+        }
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .progress-track {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .event-log {
+            font-size: 0.75rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            padding: 0.75rem;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .event-log div {
+            margin-bottom: 0.4rem;
+            color: #94a3b8;
+        }
+        .event-log div strong {
+            color: var(--accent-cyan);
+        }
+
+        /* SECTION DIAGRAMMES UML */
+        .section-title {
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 850px;
+        }
+
+        .specs-header {
+            margin-bottom: 2rem;
+        }
+        .specs-header .badge-protocol {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: #00f0ff;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .specs-nav-tabs {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.75rem;
+        }
+        .specs-tab-btn {
+            background: rgba(14, 21, 36, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #94a3b8;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .specs-tab-btn:hover {
+            color: #fff;
+            border-color: rgba(0, 240, 255, 0.4);
+            background: rgba(0, 240, 255, 0.05);
+        }
+        .specs-tab-btn.active {
+            color: #00f0ff;
+            border-color: #00f0ff;
+            background: rgba(0, 240, 255, 0.12);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+        }
+
+        .specs-tab-content {
+            display: none;
+        }
+        .specs-tab-content.active {
+            display: block;
+        }
+
+        .spec-container-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 2rem;
+            align-items: start;
+        }
+        @media (max-width: 1100px) {
+            .spec-container-grid { grid-template-columns: 1fr; }
+        }
+
+        .diagram-viewport {
+            background: rgba(11, 18, 32, 0.9);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            min-height: 480px;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .spec-doc-sidebar {
+            background: rgba(16, 24, 40, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        .spec-doc-sidebar h4 {
+            color: #00f0ff;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            font-family: var(--font-code);
+        }
+        .spec-doc-sidebar ul {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .spec-doc-sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        .spec-code-callout {
+            background: #050811;
+            border-left: 3px solid #00f0ff;
+            padding: 0.75rem;
+            font-family: var(--font-code);
+            font-size: 0.78rem;
+            color: #38bdf8;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* SECTION COMPARATIF DES BUGS SYSTÈMES */
+        .bugs-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .bugs-table th, .bugs-table td {
+            padding: 1.1rem 1.4rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .bugs-table th {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .bugs-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .tag {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .tag-red { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+
+        /* LIVE AUDIT CONSOLE */
+        .terminal-box {
+            background: #04070d;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+            font-family: var(--font-code);
+            font-size: 0.82rem;
+            color: #38bdf8;
+            height: 160px;
+            overflow-y: auto;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+        .terminal-box .term-row { margin-bottom: 0.35rem; }
+        .terminal-box .term-time { color: var(--text-muted); margin-right: 0.5rem; }
+        .terminal-box .term-success { color: var(--accent-green); }
+        .terminal-box .term-warn { color: var(--accent-amber); }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: var(--font-code);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <h1>VI.OS <span class="badge-kernel">Microkernel v6.0-Alpha</span></h1>
+            <p>Jumeau Numérique Territorial : Modélisation Orientée Objet & Subsidiarité Algorithmique</p>
+        </div>
+        <div class="nav-status">
+            <span>UPTIME: <strong>100%</strong></span>
+            <span>TOPOLOGIE: <strong>MULTIGRAPHE P2P</strong></span>
+            <span>CONSENSUS: <strong>AUDIT CONTINU</strong></span>
+        </div>
+    </header>
+
+    <main>
+        <!-- MANIFESTE DE VISION (2026) -->
+        <section class="manifesto-card">
+            <span class="manifesto-badge">Projet Open Source :: Horizon 2026</span>
+            <h2 class="manifesto-title">Ma 6ᵉ République : Refonder le Code Source Républicain</h2>
+            <p class="manifesto-text">
+                <strong>Ma 6ᵉ République</strong> est un projet open source destiné à démontrer qu'une société humaine peut être rigoureusement modélisée sous la forme d'un programme informatique. En cartographiant avec précision l'ensemble des structures, des flux (matières, monnaie, énergie, information) et des stocks, nous identifions les dysfonctionnements majeurs de notre organisation collective.
+            </p>
+            <p class="manifesto-text">
+                Le grand problème de notre société actuelle est qu'elle tourne sur un système d'exploitation conçu en 1958 : centralisé, opaque et monolithique. <strong>Nous sommes aujourd'hui en 2026</strong> : à l'ère de l'intelligence artificielle et des réseaux distribués, il est temps de moderniser et de sécuriser notre infrastructure institutionnelle depuis la base.
+            </p>
+            <div class="manifesto-grid" style="margin-top: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                <div class="manifesto-point" style="border-left-color: var(--accent-cyan);">
+                    <strong style="color: var(--accent-cyan);">1. ABSTRACTION DU SOCIAL À 95+%</strong>
+                    Mathématisation des flux, des stocks et des transactions déterministes. Automatisation des tâches de gestion pour redonner les 5 % restants à la délibération éthique et politique humaine.
+                </div>
+                <div class="manifesto-point" style="border-left-color: var(--accent-amber);">
+                    <strong style="color: var(--accent-amber);">2. FIN DU BRICOLAGE SUR OS 1958</strong>
+                    Comprendre que taxer ou raboter aveuglément revient à patcher Windows 95 à l'ère de l'IA. Refonte du noyau centralisé jacobin vers un micro-noyau modulaire et transparent.
+                </div>
+                <div class="manifesto-point" style="border-left-color: var(--accent-green);">
+                    <strong style="color: var(--accent-green);">3. PODS & CRYPTOGRAPHIE ZKP</strong>
+                    Souveraineté absolue des données citoyennes. Chaque individu possède son conteneur chiffré (POD) et valide ses droits par Preuves à Divulgation Nulle (ZKP), éliminant définitivement les fuites massives de données.
+                </div>
+            </div>
+        </section>
+
+        <!-- NOUVELLE SECTION : ORCHESTRATION IA & SPRINTS AGILES -->
+        <section class="orchestration-container">
+            <h2 class="section-title">Orchestration Multi-Agents & R&D Agile de la VIᵉ République</h2>
+            <p class="section-subtitle">
+                Le développement de la plateforme est confié à un pipeline d'agents d'intelligence artificielle opérant en graphe orienté (DAG). Chaque sprint de deux semaines décompile une friction historique et livre un incrément d'architecture déployable.
+            </p>
+
+            <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem; font-family: var(--font-code);">[AGENTS EN SERVICE DANS LE KERNEL]</h3>
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <span class="agent-name">Agent 1 : AST Parser</span>
+                        <span class="agent-status">ACTIF</span>
+                    </div>
+                    <p class="agent-desc">Décompile la Constitution de 1958, les décrets et les traités en un Arbre Syntaxique Abstrait pour isoler les instructions discrétionnaires non vérifiables.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <span class="agent-name">Agent 2 : Bug Profiler</span>
+                        <span class="agent-status">ACTIF</span>
+                    </div>
+                    <p class="agent-desc">Rejoue les crises (1958, 1973, 1983, 2008, 2023) sous forme d'anomalies de concurrence (Race Conditions) et de fuites de mémoire (Memory Leaks).</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <span class="agent-name">Agent 3 : Microkernel Eng.</span>
+                        <span class="agent-status">ACTIF</span>
+                    </div>
+                    <p class="agent-desc">Formalise les primitives du micro-noyau (Ring-0 régalien, Ring-3 espace utilisateur) pour garantir la stricte subsidiarité territoriale sans compte root.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <span class="agent-name">Agent 4 : Graph Physics</span>
+                        <span class="agent-status">ACTIF</span>
+                    </div>
+                    <p class="agent-desc">Calibre les 28 métropoles et bassins de vie selon la loi de conservation de Kirchhoff : balance stricte entre intrants, stocks locaux et flux sortants.</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <span class="agent-name">Agent 5 : Web Compiler</span>
+                        <span class="agent-status">ACTIF</span>
+                    </div>
+                    <p class="agent-desc">Compile automatiquement les résultats des simulations en composants web interactifs, diagrammes de séquence et interfaces d'audit citoyen.</p>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem; font-family: var(--font-code);">[FEUILLE DE ROUTE DES SPRINTS & CONCEPTS LIVRABLES]</h3>
+            <div class="sprints-timeline">
+                <div class="sprint-row">
+                    <div class="sprint-meta">
+                        <span class="sprint-tag">Sprint 1 :: Livré</span>
+                        <span class="sprint-title">AST & Décompilation</span>
+                    </div>
+                    <div class="sprint-details">
+                        Modélisation de l'architecture institutionnelle de 1958 en code orienté objet. Identification des goulets d'étranglement administratifs et de l'instruction d'outrepassement <code>sudo 49.3</code>.
+                    </div>
+                    <div class="sprint-deliverable">
+                        Livrable : Spec UML & Manifeste Système
+                    </div>
+                </div>
+
+                <div class="sprint-row">
+                    <div class="sprint-meta">
+                        <span class="sprint-tag">Sprint 2 :: En cours</span>
+                        <span class="sprint-title">Topologie & Kirchhoff</span>
+                    </div>
+                    <div class="sprint-details">
+                        Déploiement du multigraphe sur 28 métropoles françaises (>150k hab.). Résolution complète des collisions territoriales et simulation en temps réel des paquets de ressources.
+                    </div>
+                    <div class="sprint-deliverable">
+                        Livrable : Canvas 28 Nœuds & Overlays
+                    </div>
+                </div>
+
+                <div class="sprint-row">
+                    <div class="sprint-meta">
+                        <span class="sprint-tag">Sprint 3 :: Prochain</span>
+                        <span class="sprint-title">Isolation Ring-0 / Ring-3</span>
+                    </div>
+                    <div class="sprint-details">
+                        Séparation matérielle des fonctions régaliennes et des services locaux. Sanctuarisation de la santé et de l'éducation hors de la portée des décrets discrétionnaires centraux.
+                    </div>
+                    <div class="sprint-deliverable">
+                        Livrable : Module IPC & Isolation de Mémoire
+                    </div>
+                </div>
+
+                <div class="sprint-row">
+                    <div class="sprint-meta">
+                        <span class="sprint-tag">Sprint 4 :: Planifié</span>
+                        <span class="sprint-title">Protocole Anti-Cantillon</span>
+                    </div>
+                    <div class="sprint-details">
+                        Traçabilité cryptographique intégrale de la création monétaire. Suppression des canaux de fuite de capitaux offshore par application de registres d'audit immuables.
+                    </div>
+                    <div class="sprint-deliverable">
+                        Livrable : Explorateur Zéro-Fuite & Séquestres
+                    </div>
+                </div>
+
+                <div class="sprint-row">
+                    <div class="sprint-meta">
+                        <span class="sprint-tag">Sprint 5 :: Planifié</span>
+                        <span class="sprint-title">Machine Législative CI/CD</span>
+                    </div>
+                    <div class="sprint-details">
+                        Procédure de Pull Request pour toute nouvelle loi, tests de résistance par IA, déploiements territoriaux témoins (Canary) et clause de Rollback automatique à 3 ans.
+                    </div>
+                    <div class="sprint-deliverable">
+                        Livrable : Sandbox Législative & Vote P2P
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULATEUR CARTE DE FRANCE EXPANDED & INSPECTEUR -->
+        <section>
+            <h2 class="section-title">Visualisation Topologique du Réseau France (28 Métropoles > 150k Hab.)</h2>
+            <p class="section-subtitle">Chaque pôle urbain opère comme un nœud autonome échangeant des paquets de ressources selon la loi de conservation. Aucun chevauchement : cliquez sur un nœud pour ouvrir l'inspecteur d'état.</p>
+
+            <div class="simulator-grid">
+                <div class="map-container">
+                    <div class="layer-controls">
+                        <button class="layer-btn active" data-layer="energy">
+                            <span style="color:var(--accent-cyan)">●</span> Couche Énergie (kWh)
+                        </button>
+                        <button class="layer-btn active" data-layer="money">
+                            <span style="color:var(--accent-amber)">●</span> Couche Monnaie / Valeur
+                        </button>
+                        <button class="layer-btn active" data-layer="materials">
+                            <span style="color:var(--accent-green)">●</span> Matières & Biens (Kg)
+                        </button>
+                        <button class="layer-btn active" data-layer="decision">
+                            <span style="color:var(--accent-purple)">●</span> Décisions & Protocoles
+                        </button>
+                    </div>
+                    <canvas id="networkCanvas"></canvas>
+                </div>
+
+                <div class="inspector-panel" id="inspector">
+                    <h2>
+                        <span>INSPECTEUR DE NŒUD</span>
+                        <span id="inspectNodeId" style="color: #fff;">PARIS</span>
+                    </h2>
+                    
+                    <div class="node-meta">
+                        <div><span>ADRESSE IP : </span><strong id="inspectIP" style="color:var(--accent-cyan)">FR::IDF::75::NODE_01</strong></div>
+                        <div><span>CLASSE : </span><strong id="inspectClass">MetropoleGatewayNode</strong></div>
+                        <div><span>POPULATION SERVIE : </span><strong id="inspectPop">2 140 000 hab.</strong></div>
+                        <div><span>PERMISSIONS : </span><strong id="inspectPerms">rw-r--r-- (Subsidiaire)</strong></div>
+                    </div>
+
+                    <h3 style="font-size: 0.8rem; margin-bottom: 0.6rem; color: #cbd5e1;">STOCKS EN MÉMOIRE TAMPON</h3>
+                    <div class="stock-bars">
+                        <div class="stock-item">
+                            <div class="stock-header">
+                                <span>Énergie (Stock de Sécurité)</span>
+                                <span id="valEnergy">82%</span>
+                            </div>
+                            <div class="progress-track"><div class="progress-fill" id="barEnergy" style="width: 82%; background: var(--accent-cyan);"></div></div>
+                        </div>
+                        <div class="stock-item">
+                            <div class="stock-header">
+                                <span>Liquidité Locale (Trésorerie)</span>
+                                <span id="valMoney">95%</span>
+                            </div>
+                            <div class="progress-track"><div class="progress-fill" id="barMoney" style="width: 95%; background: var(--accent-amber);"></div></div>
+                        </div>
+                        <div class="stock-item">
+                            <div class="stock-header">
+                                <span>Réserves Alimentaires & Matières</span>
+                                <span id="valMat">60%</span>
+                            </div>
+                            <div class="progress-track"><div class="progress-fill" id="barMat" style="width: 60%; background: var(--accent-green);"></div></div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 0.8rem; margin-bottom: 0.6rem; color: #cbd5e1;">HISTORIQUE (LISTE CHAÎNÉE IMMUABLE)</h3>
+                    <div class="event-log" id="inspectLog">
+                        <div><strong>11:42:01</strong> Synchronisation de charge avec Lyon effectuée</div>
+                        <div><strong>11:38:15</strong> Paquet de fret ferroviaire en transit vers Le Havre</div>
+                        <div><strong>11:30:00</strong> Bloc d'audit local scellé par preuve à divulgation nulle</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION : SPÉCIFICATIONS LOGICIELLES & ARCHITECTURE UML (VI.OS CORE) -->
+        <section id="uml-architecture-section">
+            <div class="specs-header">
+                <span class="badge-protocol">RFC-001 :: ARCHITECTURE TECHNIQUE DU PROTOCOLE</span>
+                <h2 class="section-title">Spécifications & Diagrammes UML de la VIᵉ République</h2>
+                <p class="section-subtitle">
+                    Définition rigoureuse de l'architecture logicielle de la nation. Du méta-modèle orienté objet au système d'isolation des privilèges (Ring-0 / Ring-3), chaque composant social est traduit en structure informatique vérifiable et auditable.
+                </p>
+            </div>
+
+            <!-- ONGLETS DE SÉLECTION -->
+            <div class="specs-nav-tabs">
+                <button class="specs-tab-btn active" onclick="switchSpecTab(this, 'tab-classes')">
+                    [1] Méta-Modèle Objet (Classes Core)
+                </button>
+                <button class="specs-tab-btn" onclick="switchSpecTab(this, 'tab-arch')">
+                    [2] Architecture OS : Monolithe vs Microkernel
+                </button>
+                <button class="specs-tab-btn" onclick="switchSpecTab(this, 'tab-sequence')">
+                    [3] Audit & Dépense Publique (Séquence)
+                </button>
+                <button class="specs-tab-btn" onclick="switchSpecTab(this, 'tab-state')">
+                    [4] Cycle de Vie Législatif (Machine à États)
+                </button>
+            </div>
+
+            <!-- VOLET 1 : DIAGRAMME DE CLASSES -->
+            <div id="tab-classes" class="specs-tab-content active">
+                <div class="spec-container-grid">
+                    <div class="diagram-viewport">
+                        <div class="mermaid">
+classDiagram
+    class NetworkNode {
+        +String ipAddress
+        +Float integrityScore
+        +processTick(tick)
+        +auditConservationLaw()
+        +emitProof()
+    }
+
+    class StockBuffer {
+        +String resourceId
+        +Float currentLevel
+        +Float maxCapacity
+        +replenish(amount)
+        +drain(amount)
+    }
+
+    class DirectedFlow {
+        +String flowUUID
+        +String resourceCategory
+        +Float ratePerTick
+        +Int latencyMs
+        +Boolean isVoluntaryContract
+        +validateInvariant()
+    }
+
+    class CommunicationChannel {
+        +Float maxBandwidth
+        +Float routingFriction
+        +transmit(flow)
+    }
+
+    class LedgerAuditBlock {
+        +Long blockIndex
+        +String previousHash
+        +String stateMerkleRoot
+        +verifySignature()
+    }
+
+    class CitizenEdgeNode {
+        +String sovereignDID
+        +submitPullRequest(lawCode)
+    }
+
+    class LocalTerritoryNode {
+        +String postalGeoHash
+        +arbitrateLocalCommons()
+    }
+
+    class MicrokernelCore {
+        +String constitutionalHash
+        +enforceBasicRights()
+        +triggerRollback(processId)
+    }
+
+    NetworkNode <|-- CitizenEdgeNode
+    NetworkNode <|-- LocalTerritoryNode
+    NetworkNode <|-- MicrokernelCore
+    NetworkNode *-- StockBuffer
+    NetworkNode *-- DirectedFlow
+    NetworkNode *-- LedgerAuditBlock
+    DirectedFlow --> CommunicationChannel
+                        </div>
+                    </div>
+                    <div class="spec-doc-sidebar">
+                        <h4>// Invariants Fondamentaux</h4>
+                        <p>Le méta-modèle repose sur la <strong>conservation stricte de l'énergie et de la valeur</strong>.</p>
+                        <div class="spec-code-callout">
+                            ΔStock = Σ(Flow_in) - Σ(Flow_out) - Perte_Entropique
+                        </div>
+                        <ul>
+                            <li><strong>NetworkNode :</strong> Tout acteur (individu, entreprise, commune) est un nœud adressable sans hiérarchie arbitraire.</li>
+                            <li><strong>StockBuffer :</strong> Élimination du flux tendu mortifère dans les fonctions critiques (santé, réserves).</li>
+                            <li><strong>LedgerAuditBlock :</strong> Chaque transfert de fonds publics génère un bloc de log cryptographique non falsifiable.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOLET 2 : ARCHITECTURE OS -->
+            <div id="tab-arch" class="specs-tab-content">
+                <div class="spec-container-grid">
+                    <div class="diagram-viewport">
+                        <div class="mermaid">
+flowchart TB
+    subgraph V_Monolith["V République : Noyau Monolithique 1958"]
+        Elysee["Elysée : Administrateur Central root"]
+        ForceCmd["Instruction d'Outrepassement : sudo 49.3"]
+        Ministries["Modules Ministériels Défaillants"]
+        BugMemory["Memory Leak : Capitaux Off-shore"]
+        Collapse["Crash Global : Blocage Institutionnel"]
+
+        Elysee -->|Élévation de privilèges| ForceCmd
+        ForceCmd -->|Court-circuit du Parlement| Ministries
+        Ministries --> Collapse
+        BugMemory -.->|Assèchement des ressources| Elysee
+    end
+
+    subgraph VI_Kernel["VI République : Micro-Noyau et Subsidiarité"]
+        MK["Microkernel Régalien Minimal<br/>Justice Arbitrale, Défense, Droits Fondamentaux"]
+        Bus["Bus Public IPC : Données Ouvertes et API Publiques"]
+        Communes["Nœuds Territoriaux : Communes et Bassins"]
+        Hospitals["Pôles Sanitaires et Éducation"]
+        Citizens["Nœuds Citoyens : Auditeurs Pairs"]
+
+        MK <-->|Appels Système Sécurisés| Bus
+        Bus <-->|Isolation Mémoire| Communes
+        Bus <-->|Isolation Mémoire| Hospitals
+        Bus <-->|Isolation Mémoire| Citizens
+    end
+                        </div>
+                    </div>
+                    <div class="spec-doc-sidebar">
+                        <h4>// Séparation des Privilèges</h4>
+                        <p>Dans un micro-noyau moderne (type seL4 certifié formellement), <strong>le plantage d'un pilote ne fait pas planter l'OS entier</strong>.</p>
+                        <ul>
+                            <li><strong>Suppression du compte root :</strong> Aucun mandataire ne dispose d'un pouvoir arbitraire d'outrepassement.</li>
+                            <li><strong>Espace utilisateur (Ring-3) :</strong> Santé et éducation disposent d'une autonomie locale totale.</li>
+                            <li><strong>Bus IPC auditable :</strong> Tout flux public s'exécute sous la forme d'un contrat vérifiable et opposable.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOLET 3 : SÉQUENCE AUDIT DÉPENSE -->
+            <div id="tab-sequence" class="specs-tab-content">
+                <div class="spec-container-grid">
+                    <div class="diagram-viewport">
+                        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Demandeur as Collectivité Locale / Hôpital
+    participant Microkernel as Micro-Noyau VI.OS
+    participant Ordonnanceur as Ordonnanceur Budgétaire
+    participant SmartTreasury as Trésor Décentralisé
+    participant AuditLog as Registre d'Audit Public
+
+    Demandeur->>Microkernel: Requête d'allocation de fonds
+    Microkernel->>Microkernel: Vérification formelle subsidiarité
+    
+    alt Incohérence ou Absence d'Objectif
+        Microkernel-->>Demandeur: Rejet ERR_NO_SOCIETAL_METRICS
+    else Conformité Validée
+        Microkernel->>Ordonnanceur: Enregistrement engagement budgétaire
+        Ordonnanceur->>SmartTreasury: Déblocage sous séquestre programmable
+        SmartTreasury->>Demandeur: Transfert liquidité traçable
+        Demandeur->>AuditLog: Preuve de réalisation et métriques d'impact
+        AuditLog-->>Demandeur: Consolidation du bloc validée
+    end
+                        </div>
+                    </div>
+                    <div class="spec-doc-sidebar">
+                        <h4>// Protocole Zéro-Dérive</h4>
+                        <p>Suppression des lignes budgétaires sans affectation mesurable.</p>
+                        <ul>
+                            <li><strong>Atomicité transactionnelle :</strong> Pas de transfert de fonds sans obligation de résultat vérifiable.</li>
+                            <li><strong>Séquestre programmable :</strong> Libération des tranches budgétaires conditionnée par jalons d'avancement.</li>
+                            <li><strong>Audit continu par les pairs :</strong> Consultation et contrôle en temps réel sans filtre bureaucratique.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOLET 4 : MACHINE À ÉTATS LÉGISLATIF -->
+            <div id="tab-state" class="specs-tab-content">
+                <div class="spec-container-grid">
+                    <div class="diagram-viewport">
+                        <div class="mermaid">
+stateDiagram-v2
+    [*] --> PhaseRedaction : Dépôt d'une Pull Request Législative
+
+    state PhaseRedaction {
+        [*] --> RedactionTexte : Rédaction de la loi
+        RedactionTexte --> SimulationIA : Tests d'impacts par IA
+        SimulationIA --> [*]
+    }
+
+    PhaseRedaction --> RejetDirect : Faille ou effet pervers détecté
+    PhaseRedaction --> PhasePilote : Validation des pairs et vote
+
+    state PhasePilote {
+        [*] --> TestLocal : Application sur deux bassins pilotes
+        TestLocal --> AuditMetriques : Mesure sur 36 mois
+        AuditMetriques --> [*]
+    }
+
+    PhasePilote --> RollbackAutomatique : Objectifs non atteints
+    PhasePilote --> FusionNationale : Objectifs confirmés
+
+    RollbackAutomatique --> [*] : Abrogation et purge législative
+    FusionNationale --> [*] : Déploiement au socle national
+    RejetDirect --> [*] : Purge du code
+                        </div>
+                    </div>
+                    <div class="spec-doc-sidebar">
+                        <h4>// Fin de l'Inflation Normative</h4>
+                        <p>L'accumulation de lois non évaluées crée de l'entropie et paralyse la société.</p>
+                        <ul>
+                            <li><strong>Rollback automatique :</strong> Toute loi nouvelle est abrogée d'office si elle n'atteint pas ses cibles en 3 ans.</li>
+                            <li><strong>Déploiement Canary :</strong> Expérimentation territoriale obligatoire avant généralisation nationale.</li>
+                            <li><strong>Simulation d'impact :</strong> Détection préalable des effets pervers et des conditions de course.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANALYSE COMPARATIVE DES BUGS SYSTÈMES -->
+        <section>
+            <h2 class="section-title">Diagnostics d'Ingénierie : Les Fautes du Système Actuel</h2>
+            <p class="section-subtitle">Comment les dysfonctionnements économiques et politiques majeurs se traduisent directement en concepts d'architecture informatique.</p>
+
+            <table class="bugs-table">
+                <thead>
+                    <tr>
+                        <th>Pathologie Économique</th>
+                        <th>Équivalent Système (OS)</th>
+                        <th>Comportement sous la Vᵉ République</th>
+                        <th>Correction sous la VIᵉ République (Microkernel)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Évasion & Fuite des Capitaux</strong></td>
+                        <td><span class="tag tag-red">Memory Leak</span></td>
+                        <td>Allocation de liquidités qui ne sont jamais libérées (`free`). Le garbage collector échoue, déclenchant le rabotage arbitraire des services publics.</td>
+                        <td>Loi de conservation stricte. Tout flux financier est adressable et auditable en temps réel.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Optimisation Fiscale des Fortunes</strong></td>
+                        <td><span class="tag tag-red">Race Condition</span></td>
+                        <td>Désynchronisation temporelle : les capitaux voyagent à la milliseconde, la législation fiscale met des années à réagir.</td>
+                        <td>Smart-contracts institutionnels : exécution atomique et transparente des règles sans latence législative exploitable.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lobbying & Passe-droits</strong></td>
+                        <td><span class="tag tag-red">Privilege Escalation</span></td>
+                        <td>Création de portes dérobées (*backdoors*) fiscales accordées aux grands acteurs économiques sans vote populaire transparent.</td>
+                        <td>Architecture Zéro-Trust. Aucune élévation de privilèges (`sudo`) sans pull request publique et consensus du réseau.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Crise des Hôpitaux & Urgences</strong></td>
+                        <td><span class="tag tag-red">Buffer Overflow / DoS</span></td>
+                        <td>Gestion en flux tendu sans capacité tampon (*zero buffer*). Le moindre pic de requêtes fait planter la file d'attente.</td>
+                        <td>Dimensionnement décentralisé des stocks de sécurité géré au niveau local avec mémoire tampon obligatoire.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- TERMINAL D'AUDIT EN DIRECT -->
+        <section>
+            <h2 class="section-title">Console de Télémétrie & Logs d'Exécution</h2>
+            <p class="section-subtitle">Flux continu d'événements distribués et de vérification d'intégrité du protocole républicain.</p>
+            <div class="terminal-box" id="terminalOutput">
+                <div class="term-row"><span class="term-time">[00:00:01]</span> <span class="term-success">KERNEL_INIT:</span> Micro-noyau initialisé avec succès sur 28 nœuds métropolitains.</div>
+                <div class="term-row"><span class="term-time">[00:00:02]</span> <span class="term-success">CONSENSUS:</span> Bloc de conformité constitutionnelle #80124 validé.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Projet VIᵉ République (VI.OS) — Pour une République décentralisée, auditable et adaptée au siècle numérique.</p>
+    </footer>
+
+    <!-- SCRIPT DU MOTEUR DU SIMULATEUR & INITIALISATION PROPRE DE MERMAID -->
+    <script>
+        // 1. Initialisation contrôlée de Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            themeVariables: {
+                darkMode: true,
+                background: '#0e1524',
+                primaryColor: '#00f0ff',
+                primaryTextColor: '#fff',
+                lineColor: '#38bdf8'
+            }
+        });
+
+        // 2. Fonction de bascule d'onglets (Lazy rendering)
+        function switchSpecTab(btnElement, tabId) {
+            document.querySelectorAll('.specs-tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            document.querySelectorAll('.specs-tab-content').forEach(c => c.classList.remove('active'));
+            
+            const activeTab = document.getElementById(tabId);
+            if (!activeTab) return;
+            
+            activeTab.classList.add('active');
+
+            const mermaidElement = activeTab.querySelector('.mermaid');
+            if (mermaidElement && !mermaidElement.getAttribute('data-processed') && window.mermaid) {
+                window.mermaid.run({ nodes: [mermaidElement] }).catch(err => {
+                    console.warn("Rendu Mermaid différé :", err);
+                });
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const firstTabMermaid = document.querySelector('#tab-classes .mermaid');
+            if (firstTabMermaid && window.mermaid) {
+                window.mermaid.run({ nodes: [firstTabMermaid] });
+            }
+        });
+
+        // 3. CARTOGRAPHIE : 28 VILLES DE FRANCE (> 150K HABITANTS & CAPITALES RÉGIONALES)
+        const NODES = [
+            { id: "PARIS", name: "Paris", pop: "2 140 000", ip: "FR::IDF::75::NODE_01", lat: 48.8566, lon: 2.3522, energy: 82, money: 95, mat: 60, dx: 0, dy: -14, align: "center" },
+            { id: "MARSEILLE", name: "Marseille", pop: "870 000", ip: "FR::PAC::13::NODE_02", lat: 43.2965, lon: 5.3698, energy: 65, money: 70, mat: 85, dx: -12, dy: 14, align: "right" },
+            { id: "LYON", name: "Lyon", pop: "522 000", ip: "FR::ARA::69::NODE_03", lat: 45.7640, lon: 4.8357, energy: 88, money: 85, mat: 82, dx: 14, dy: 0, align: "left" },
+            { id: "TOULOUSE", name: "Toulouse", pop: "498 000", ip: "FR::OCC::31::NODE_04", lat: 43.6047, lon: 1.4442, energy: 80, money: 75, mat: 78, dx: -12, dy: 12, align: "right" },
+            { id: "NICE", name: "Nice", pop: "343 000", ip: "FR::PAC::06::NODE_05", lat: 43.7102, lon: 7.2620, energy: 60, money: 85, mat: 65, dx: 12, dy: -6, align: "left" },
+            { id: "NANTES", name: "Nantes", pop: "320 000", ip: "FR::PDL::44::NODE_06", lat: 47.2184, lon: -1.5536, energy: 85, money: 75, mat: 70, dx: -12, dy: -10, align: "right" },
+            { id: "MONTPELLIER", name: "Montpellier", pop: "299 000", ip: "FR::OCC::34::NODE_07", lat: 43.6108, lon: 3.8767, energy: 72, money: 70, mat: 74, dx: -12, dy: 10, align: "right" },
+            { id: "STRASBOURG", name: "Strasbourg", pop: "290 000", ip: "FR::GES::67::NODE_08", lat: 48.5734, lon: 7.7521, energy: 75, money: 70, mat: 80, dx: 12, dy: 0, align: "left" },
+            { id: "BORDEAUX", name: "Bordeaux", pop: "260 000", ip: "FR::NAQ::33::NODE_09", lat: 44.8378, lon: -0.5792, energy: 78, money: 80, mat: 75, dx: -12, dy: 0, align: "right" },
+            { id: "LILLE", name: "Lille", pop: "236 000", ip: "FR::HDF::59::NODE_10", lat: 50.6292, lon: 3.0573, energy: 70, money: 65, mat: 75, dx: 0, dy: -14, align: "center" },
+            { id: "RENNES", name: "Rennes", pop: "222 000", ip: "FR::BRE::35::NODE_11", lat: 48.1173, lon: -1.6778, energy: 88, money: 60, mat: 85, dx: -12, dy: -10, align: "right" },
+            { id: "REIMS", name: "Reims", pop: "180 000", ip: "FR::GES::51::NODE_12", lat: 49.2583, lon: 4.0317, energy: 68, money: 62, mat: 72, dx: 12, dy: -8, align: "left" },
+            { id: "TOULON", name: "Toulon", pop: "179 000", ip: "FR::PAC::83::NODE_13", lat: 43.1242, lon: 5.9280, energy: 64, money: 68, mat: 70, dx: 12, dy: 10, align: "left" },
+            { id: "SAINT_ETIENNE", name: "Saint-Étienne", pop: "174 000", ip: "FR::ARA::42::NODE_14", lat: 45.4397, lon: 4.3872, energy: 74, money: 58, mat: 75, dx: -12, dy: 12, align: "right" },
+            { id: "LE_HAVRE", name: "Le Havre", pop: "166 000", ip: "FR::NOR::76::NODE_15", lat: 49.4944, lon: 0.1079, energy: 75, money: 64, mat: 82, dx: -12, dy: -8, align: "right" },
+            { id: "GRENOBLE", name: "Grenoble", pop: "158 000", ip: "FR::ARA::38::NODE_16", lat: 45.1885, lon: 5.7245, energy: 90, money: 82, mat: 70, dx: 12, dy: 6, align: "left" },
+            { id: "DIJON", name: "Dijon", pop: "159 000", ip: "FR::BFC::21::NODE_17", lat: 47.3220, lon: 5.0415, energy: 75, money: 60, mat: 78, dx: 12, dy: -4, align: "left" },
+            { id: "ANGERS", name: "Angers", pop: "155 000", ip: "FR::PDL::49::NODE_18", lat: 47.4784, lon: -0.5632, energy: 76, money: 63, mat: 72, dx: 12, dy: -10, align: "left" },
+            { id: "NIMES", name: "Nîmes", pop: "148 000", ip: "FR::OCC::30::NODE_19", lat: 43.8367, lon: 4.3601, energy: 70, money: 60, mat: 71, dx: -12, dy: -8, align: "right" },
+            { id: "CLERMONT", name: "Clermont-Ferrand", pop: "147 000", ip: "FR::ARA::63::NODE_20", lat: 45.7772, lon: 3.0870, energy: 80, money: 58, mat: 72, dx: -14, dy: -6, align: "right" },
+            { id: "AIX", name: "Aix-en-Provence", pop: "145 000", ip: "FR::PAC::13::NODE_21", lat: 43.5297, lon: 5.4474, energy: 70, money: 82, mat: 68, dx: 12, dy: -8, align: "left" },
+            { id: "BREST", name: "Brest", pop: "139 000", ip: "FR::BRE::29::NODE_22", lat: 48.3904, lon: -4.4861, energy: 90, money: 50, mat: 80, dx: -12, dy: 4, align: "right" },
+            { id: "TOURS", name: "Tours", pop: "137 000", ip: "FR::CVL::37::NODE_23", lat: 47.3941, lon: 0.6848, energy: 74, money: 64, mat: 70, dx: 12, dy: -4, align: "left" },
+            { id: "AMIENS", name: "Amiens", pop: "134 000", ip: "FR::HDF::80::NODE_24", lat: 49.8941, lon: 2.2958, energy: 68, money: 58, mat: 72, dx: -12, dy: 0, align: "right" },
+            { id: "LIMOGES", name: "Limoges", pop: "131 000", ip: "FR::NAQ::87::NODE_25", lat: 45.8336, lon: 1.2611, energy: 76, money: 56, mat: 70, dx: -12, dy: 4, align: "right" },
+            { id: "PERPIGNAN", name: "Perpignan", pop: "120 000", ip: "FR::OCC::66::NODE_26", lat: 42.6887, lon: 2.8948, energy: 66, money: 55, mat: 72, dx: -12, dy: 10, align: "right" },
+            { id: "METZ", name: "Metz", pop: "119 000", ip: "FR::GES::57::NODE_27", lat: 49.1193, lon: 6.1757, energy: 74, money: 61, mat: 76, dx: 12, dy: -6, align: "left" },
+            { id: "BESANCON", name: "Besançon", pop: "117 000", ip: "FR::BFC::25::NODE_28", lat: 47.2378, lon: 6.0241, energy: 78, money: 60, mat: 74, dx: 12, dy: 8, align: "left" }
+        ];
+
+        // CANAUX DE DISTRIBUTION LOGISTIQUE, ÉNERGÉTIQUE ET FERROVIAIRE
+        const EDGES = [
+            ["LILLE", "AMIENS"], ["AMIENS", "PARIS"], ["LE_HAVRE", "PARIS"],
+            ["PARIS", "REIMS"], ["REIMS", "METZ"], ["METZ", "STRASBOURG"],
+            ["PARIS", "TOURS"], ["TOURS", "ANGERS"], ["ANGERS", "NANTES"],
+            ["NANTES", "RENNES"], ["RENNES", "BREST"],
+            ["TOURS", "BORDEAUX"], ["BORDEAUX", "LIMOGES"], ["LIMOGES", "CLERMONT"],
+            ["PARIS", "DIJON"], ["DIJON", "BESANCON"], ["BESANCON", "STRASBOURG"],
+            ["DIJON", "LYON"], ["LYON", "SAINT_ETIENNE"], ["SAINT_ETIENNE", "CLERMONT"],
+            ["LYON", "GRENOBLE"], ["LYON", "MARSEILLE"],
+            ["BORDEAUX", "TOULOUSE"], ["TOULOUSE", "PERPIGNAN"], ["PERPIGNAN", "MONTPELLIER"],
+            ["TOULOUSE", "MONTPELLIER"], ["MONTPELLIER", "NIMES"], ["NIMES", "AIX"],
+            ["AIX", "MARSEILLE"], ["MARSEILLE", "TOULON"], ["TOULON", "NICE"],
+            ["CLERMONT", "MONTPELLIER"], ["PARIS", "CLERMONT"]
+        ];
+
+        const canvas = document.getElementById("networkCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth - 48;
+            canvas.height = 760;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        function project(lat, lon) {
+            const minLat = 42.1, maxLat = 51.4;
+            const minLon = -5.3, maxLon = 8.8;
+            const padX = 70, padY = 50;
+            const w = canvas.width - padX * 2;
+            const h = canvas.height - padY * 2;
+
+            const x = padX + ((lon - minLon) / (maxLon - minLon)) * w;
+            const y = padY + ((maxLat - lat) / (maxLat - minLat)) * h;
+            return { x, y };
+        }
+
+        const activeLayers = { energy: true, money: true, materials: true, decision: true };
+        const layerColors = {
+            energy: "#00f0ff",
+            money: "#f59e0b",
+            materials: "#10b981",
+            decision: "#a855f7"
+        };
+
+        class Packet {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                const edge = EDGES[Math.floor(Math.random() * EDGES.length)];
+                this.from = NODES.find(n => n.id === edge[0]);
+                this.to = NODES.find(n => n.id === edge[1]);
+                if (Math.random() > 0.5) {
+                    const temp = this.from;
+                    this.from = this.to;
+                    this.to = temp;
+                }
+                const available = Object.keys(activeLayers).filter(k => activeLayers[k]);
+                this.layer = available.length > 0 ? available[Math.floor(Math.random() * available.length)] : "energy";
+                this.progress = 0;
+                this.speed = 0.003 + Math.random() * 0.006;
+            }
+            update() {
+                this.progress += this.speed;
+                if (this.progress >= 1) this.reset();
+            }
+            draw() {
+                if (!activeLayers[this.layer]) return;
+                const p1 = project(this.from.lat, this.from.lon);
+                const p2 = project(this.to.lat, this.to.lon);
+                const curX = p1.x + (p2.x - p1.x) * this.progress;
+                const curY = p1.y + (p2.y - p1.y) * this.progress;
+
+                ctx.beginPath();
+                ctx.arc(curX, curY, 3, 0, Math.PI * 2);
+                ctx.fillStyle = layerColors[this.layer];
+                ctx.shadowColor = layerColors[this.layer];
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        const packets = Array.from({ length: 60 }, () => new Packet());
+        let pulseTime = 0;
+        let selectedNode = NODES[0];
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pulseTime += 0.04;
+
+            ctx.lineWidth = 1;
+            EDGES.forEach(([id1, id2]) => {
+                const n1 = NODES.find(n => n.id === id1);
+                const n2 = NODES.find(n => n.id === id2);
+                const p1 = project(n1.lat, n1.lon);
+                const p2 = project(n2.lat, n2.lon);
+
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.07)";
+                ctx.stroke();
+            });
+
+            packets.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            NODES.forEach(n => {
+                const p = project(n.lat, n.lon);
+                const isSelected = selectedNode && selectedNode.id === n.id;
+                const radius = isSelected ? 7 : 4.5;
+                const glow = 5 + Math.sin(pulseTime + n.lon) * 3;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, radius + (isSelected ? 3 : 0), 0, Math.PI * 2);
+                ctx.fillStyle = isSelected ? "#fff" : "rgba(0, 240, 255, 0.9)";
+                ctx.shadowColor = isSelected ? "#00f0ff" : "rgba(0, 240, 255, 0.5)";
+                ctx.shadowBlur = glow;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                ctx.font = isSelected ? "bold 11px monospace" : "10px monospace";
+                ctx.textAlign = n.align || "left";
+                ctx.fillStyle = isSelected ? "#00f0ff" : "rgba(255, 255, 255, 0.7)";
+                ctx.fillText(n.name, p.x + n.dx, p.y + n.dy);
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        document.querySelectorAll(".layer-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const layer = btn.getAttribute("data-layer");
+                activeLayers[layer] = !activeLayers[layer];
+                btn.classList.toggle("active", activeLayers[layer]);
+            });
+        });
+
+        canvas.addEventListener("click", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            NODES.forEach(n => {
+                const p = project(n.lat, n.lon);
+                const dist = Math.hypot(p.x - clickX, p.y - clickY);
+                if (dist < 18) {
+                    selectNode(n);
+                }
+            });
+        });
+
+        function selectNode(node) {
+            selectedNode = node;
+            document.getElementById("inspectNodeId").innerText = node.name.toUpperCase();
+            document.getElementById("inspectIP").innerText = node.ip;
+            document.getElementById("inspectPop").innerText = node.pop + " hab.";
+            document.getElementById("inspectClass").innerText = node.id === "PARIS" ? "MetropoleGatewayNode" : "TerritorialAutonomousNode";
+            
+            document.getElementById("valEnergy").innerText = node.energy + "%";
+            document.getElementById("barEnergy").style.width = node.energy + "%";
+            
+            document.getElementById("valMoney").innerText = node.money + "%";
+            document.getElementById("barMoney").style.width = node.money + "%";
+            
+            document.getElementById("valMat").innerText = node.mat + "%";
+            document.getElementById("barMat").style.width = node.mat + "%";
+
+            const logBox = document.getElementById("inspectLog");
+            const newLog = document.createElement("div");
+            newLog.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong> Inspection nœud ${node.name} validée. Télémétrie opérationnelle.`;
+            logBox.prepend(newLog);
+        }
+
+        const terminalBox = document.getElementById("terminalOutput");
+        const logSamples = [
+            "Équilibrage de charge : Transfert 450 MWh [Brest -> Rennes] sans goulot.",
+            "AUDIT CONSTITUTIONNEL : Vérification de subsidiarité sur budget local approuvée.",
+            "Loi de conservation : 0 fuite détectée sur le sous-réseau Rhône-Alpes.",
+            "Mise à jour micro-noyau : Correctif de latence sur les transferts d'intrants.",
+            "Contrat P2P validé : Circuit court maraîchage [Nîmes -> Montpellier].",
+            "Vérification d'atomicité : Budget d'infrastructure Saint-Étienne validé sans dépassement."
+        ];
+
+        setInterval(() => {
+            const row = document.createElement("div");
+            row.className = "term-row";
+            const time = new Date().toLocaleTimeString();
+            const text = logSamples[Math.floor(Math.random() * logSamples.length)];
+            row.innerHTML = `<span class="term-time">[${time}]</span> <span class="term-warn">DISPATCH:</span> ${text}`;
+            terminalBox.appendChild(row);
+            terminalBox.scrollTop = terminalBox.scrollHeight;
+        }, 3000);
+    </script>
+</body>
+</html>
